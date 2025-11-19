@@ -1,0 +1,10 @@
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
