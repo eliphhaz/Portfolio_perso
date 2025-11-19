@@ -1,5 +1,5 @@
 import { ArrowDown } from "lucide-react";
-import PhotoHero from "../assets/eliphaz.jpeg"; // remplace par ta photo
+import PhotoHero from "../assets/Eliphaz.jpeg"; // remplace par ta photo
 
 export const HeroSection = () => {
   return (
