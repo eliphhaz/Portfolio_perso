@@ -15,7 +15,6 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Initialisation du thème
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme === "dark") {
@@ -25,46 +24,37 @@ export const Navbar = () => {
       setIsDarkMode(false);
       document.documentElement.classList.remove("dark");
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDarkMode(prefersDark);
-      document.documentElement.classList.toggle("dark", prefersDark);
-      localStorage.setItem("theme", prefersDark ? "dark" : "light");
+      const prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDarkMode(prefers);
+      document.documentElement.classList.toggle("dark", prefers);
+      localStorage.setItem("theme", prefers ? "dark" : "light");
     }
   }, []);
 
-  // Détection du scroll
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fermer le menu quand l'utilisateur scroll
   useEffect(() => {
     if (!isMenuOpen) return;
-    const closeOnScroll = () => setIsMenuOpen(false);
-    window.addEventListener("scroll", closeOnScroll);
-    return () => window.removeEventListener("scroll", closeOnScroll);
-  }, [isMenuOpen]);
-
-  // Empêcher le scroll du body quand le menu est ouvert
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+    const close = () => setIsMenuOpen(false);
+    window.addEventListener("scroll", close);
+    return () => window.removeEventListener("scroll", close);
   }, [isMenuOpen]);
 
   const scrollToSection = (id) => {
     const section = document.querySelector(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    if (section) section.scrollIntoView({ behavior: "smooth" });
   };
 
   const toggleTheme = () => {
     setIsDarkMode((prev) => {
-      const nextMode = !prev;
-      document.documentElement.classList.toggle("dark", nextMode);
-      localStorage.setItem("theme", nextMode ? "dark" : "light");
-      return nextMode;
+      const next = !prev;
+      document.documentElement.classList.toggle("dark", next);
+      localStorage.setItem("theme", next ? "dark" : "light");
+      return next;
     });
   };
 
@@ -80,80 +70,93 @@ export const Navbar = () => {
       >
         <div className="container mx-auto flex items-center justify-between px-4">
           {/* LOGO */}
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#hero");
-            }}
+          <button
+            onClick={() => scrollToSection("#hero")}
             className="text-2xl font-bold text-blue-600 dark:text-blue-400"
           >
             <span className="text-blue-700 dark:text-blue-300">Elip_folio.</span>
-          </a>
+          </button>
 
-          {/* MENU DESKTOP */}
+          {/* MENU — DESKTOP */}
           <div className="hidden md:flex flex-1 justify-end space-x-8">
             {navItems.map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => scrollToSection(item.href)}
-                className="relative text-gray-700/90 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300
-                   after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-600 dark:after:bg-blue-400
-                   after:transition-all after:duration-300 hover:after:w-full"
+                className="
+                  text-gray-700 dark:text-gray-300 
+                  hover:text-blue-600 dark:hover:text-blue-400 
+                  transition relative
+                  after:content-[''] after:block after:w-0 after:h-[2px]
+                  after:bg-blue-600 dark:after:bg-blue-400
+                  after:transition-all hover:after:w-full
+                "
               >
                 {item.name}
               </button>
             ))}
           </div>
 
-          {/* BOUTON MENU MOBILE */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="md:hidden text-gray-700 dark:text-gray-300 p-2"
-            aria-label="Ouvrir le menu"
-          >
-            <Menu size={28} />
-          </button>
-
-          {/* OVERLAY MOBILE */}
-          <div
-            className={cn(
-              "fixed inset-0 z-40 md:hidden bg-white dark:bg-gray-900 backdrop-blur-xl flex flex-col items-center justify-center transition-all duration-300",
-              isMenuOpen
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none"
-            )}
-          >
-            {/* BOUTON CROIX */}
+          {/* MENU MOBILE — BOUTON ARRONDI */}
+          <div className="md:hidden relative">
             <button
-              onClick={() => setIsMenuOpen(false)}
-              className="absolute top-6 right-6 text-gray-700 dark:text-gray-300 p-2 z-50"
-              aria-label="Fermer le menu"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={cn(
+                "inline-flex items-center justify-center font-medium text-sm px-5 py-2.5 shadow-md border border-transparent transition-colors rounded-full",
+                isDarkMode
+                  ? "text-white bg-gray-800 hover:bg-gray-700"
+                  : "text-gray-900 bg-gradient-to-r from-green-300 to-blue-300 hover:from-green-200 hover:to-blue-200"
+              )}
             >
-              <X size={32} />
+              Menu
+              <svg
+                className={`w-4 h-4 ml-2 transition-transform ${
+                  isMenuOpen ? "rotate-180" : ""
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m19 9-7 7-7-7"
+                />
+              </svg>
             </button>
 
-            {navItems.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  scrollToSection(item.href);
-                  setIsMenuOpen(false);
-                }}
-                className="text-3xl text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 my-4 font-medium"
-              >
-                {item.name}
-              </button>
-            ))}
+            {/* DROPDOWN MOBILE */}
+            <div
+              className={cn(
+                "absolute right-0 mt-2 w-44 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg p-2 transition-all duration-300",
+                isMenuOpen
+                  ? "opacity-100 pointer-events-auto translate-y-0"
+                  : "opacity-0 pointer-events-none -translate-y-2"
+              )}
+            >
+              {navItems.map((item, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    scrollToSection(item.href);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full text-left p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* BOUTON TOGGLE FIXE EN BAS-DROITE (desktop et mobile) */}
+      {/* TOGGLE THEME FIXE — TEXTE VISIBLE EN MODE CLAIR */}
       <button
         onClick={toggleTheme}
         className={cn(
-          "fixed bottom-8 right-6 p-3 rounded-full shadow-md transition-colors duration-300 z-50",
+          "fixed bottom-8 right-6 p-3 rounded-full shadow-lg transition duration-300 z-50",
           isDarkMode
             ? "bg-gray-900 hover:bg-gray-800"
             : "bg-gradient-to-r from-green-400 to-blue-300 hover:from-green-300 hover:to-blue-200"
@@ -162,7 +165,7 @@ export const Navbar = () => {
         {isDarkMode ? (
           <Sun className="h-6 w-6 text-yellow-400" />
         ) : (
-          <Moon className="h-6 w-6 text-gray-800 dark:text-gray-200" />
+          <Moon className="h-6 w-6 text-gray-900" /> // FIX : reste visible sur fond clair
         )}
       </button>
     </>
