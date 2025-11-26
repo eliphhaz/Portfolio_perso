@@ -12,7 +12,7 @@ export const HeroSection = () => {
         {/* Colonne gauche : Photo */}
         <div className="w-full md:w-1/2 flex justify-center">
           <div className="relative group">
-            <div className="absolute inset-0 w-64 h-72 md:w-96 md:h-[28rem] rounded-[50%/40%] border-4 border-white dark:border-gray-300 transition-transform duration-500 scale-95 group-hover:scale-105" />
+            <div className="absolute inset-0 w-64 h-72 md:w-96 md:h-[28rem] rounded-[50%/40%]  dark:border-gray-300 transition-transform duration-500 scale-95 group-hover:scale-105" />
             <img
               src={PhotoHero}
               alt="Eliphaz Guetin"
