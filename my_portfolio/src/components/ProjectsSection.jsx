@@ -3,12 +3,12 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "SaaS Landing Page",
-    description: "Une belle landing page utilisant React et Tailwind.",
-    image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Supabase"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "Portfolio",
+    description: "Portfolio personnel moderne et réactif.",
+    image: "src/assets/portfolio.png",
+    tags: ["React", "TailwindCSS"],
+    demoUrl: "https://porfolioperso.vercel.app/",
+    githubUrl: "https://github.com/eliphhaz/Portfolio_perso",
   },
   {
     id: 2,
