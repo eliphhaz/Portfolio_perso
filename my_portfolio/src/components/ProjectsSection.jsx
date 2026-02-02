@@ -1,11 +1,12 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import portfolioImage from "../assets/portfolio.png";
 
 const projects = [
   {
     id: 1,
     title: "Portfolio",
     description: "Portfolio personnel moderne et réactif.",
-    image: "src/assets/portfolio.png",
+    image: portfolioImage,
     tags: ["React", "TailwindCSS"],
     demoUrl: "https://porfolioperso.vercel.app/",
     githubUrl: "https://github.com/eliphhaz/Portfolio_perso",
