@@ -1,5 +1,6 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import portfolioImage from "../assets/portfolio.png";
+import YobaloImage from "../assets/Yobalo.png";
 
 const projects = [
   {
@@ -13,19 +14,19 @@ const projects = [
   },
   {
     id: 2,
-    title: "Orbit Analytics Dashboard",
+    title: "Site Yobalo",
     description:
-      "Tableau de bord interactif avec visualisation de données et filtrage.",
-    image: "/projects/project2.png",
-    tags: ["TypeScript", "D3.js", "Next.js"],
-    demoUrl: "#",
+      "Yobalo est né d'une idée simple : la livraison de proximité doit être un service de confiance, chaleureux et solidaire. Chaque course devient un geste d'entraide entre voisins.",
+    image: YobaloImage,
+    tags: ["WordPress"],
+    demoUrl: "https://yobalo.com/",
     githubUrl: "#",
   },
   {
     id: 3,
     title: "Plateforme E-commerce",
     description:
-      "Plateforme e-commerce complète avec authentification et paiement.",
+      "",
     image: "/projects/project3.png",
     tags: ["React", "Node.js", "Stripe"],
     demoUrl: "#",
