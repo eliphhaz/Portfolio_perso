@@ -2,7 +2,6 @@ import { Mail, MapPin, Phone, Send, Linkedin, Facebook, Instagram, Github } from
 import { useState } from "react";
 import { cn } from "../lib/utils";
 import { useToast } from "../hooks/use-toast";
-import emailjs from "emailjs-com";
 
 export const ContactSection = () => {
   const { toast } = useToast();
@@ -14,35 +13,42 @@ export const ContactSection = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    emailjs
-      .send(
-        "service_lltubee",
-        "template_2hcd3op",
-        formData,
-        "Y0waBZUFQFZtWWcnH"
-      )
-      .then(
-        () => {
-          toast({
-            title: "Message envoyé !",
-            description: "Merci pour votre message. Je vous répondrai bientôt.",
-          });
-          setFormData({ name: "", email: "", message: "" });
-          setIsSubmitting(false);
-        },
-        (error) => {
-          toast({
-            title: "Erreur",
-            description: "Le message n'a pas pu être envoyé. Réessayez.",
-          });
-          console.error(error);
-          setIsSubmitting(false);
-        }
-      );
+    const formData = new FormData(e.target);
+    formData.append("access_key", "9d1ea83f-815a-4b55-ac21-a27f24c7bc36");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Message envoyé !",
+          description: "Merci pour votre message. Je vous répondrai bientôt.",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast({
+          title: "Erreur",
+          description: "Le message n'a pas pu être envoyé. Réessayez.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Le message n'a pas pu être envoyé. Réessayez.",
+      });
+      console.error(error);
+    }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -153,13 +159,15 @@ export const ContactSection = () => {
                 onChange={handleChange}
                 required
                 placeholder="Votre message"
+                rows="5"
                 className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors duration-300"
+                  "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors duration-300",
+                  isSubmitting && "opacity-50 cursor-not-allowed"
                 )}
               >
                 {isSubmitting ? "Envoi..." : "Envoyer"} <Send size={16} />
