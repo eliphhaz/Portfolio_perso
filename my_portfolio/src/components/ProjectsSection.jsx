@@ -1,6 +1,7 @@
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import { useReveal } from "../hooks/useReveal";
 import { useRef, useEffect } from "react";
+import { useLang } from "../context/LanguageContext";
 import portfolioImage from "../assets/portfolio.png";
 import YobaloImage    from "../assets/Yobalo.png";
 import SerenaImage    from "../assets/serena.png";
@@ -72,6 +73,8 @@ const ProjectCard = ({ project, index }) => {
 };
 
 export const ProjectsSection = () => {
+  const { t } = useLang();
+  const p = t.projects;
   const titleRef = useReveal();
   const subRef   = useReveal();
   const btnRef   = useReveal();
@@ -81,11 +84,11 @@ export const ProjectsSection = () => {
       <div className="container mx-auto max-w-5xl">
 
         <h2 ref={titleRef} className="reveal-up text-3xl md:text-4xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">
-          Projets <span className="text-blue-600 dark:text-blue-400">phares</span>
+          {p.title} <span className="text-blue-600 dark:text-blue-400">{p.title_highlight}</span>
         </h2>
 
         <p ref={subRef} className="reveal-fade text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
-          Voici quelques-uns de mes projets récents. Chaque projet a été conçu avec soin, en accordant une attention particulière aux détails, à la performance et à l'expérience utilisateur.
+          {p.subtitle}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -101,7 +104,7 @@ export const ProjectsSection = () => {
             rel="noopener noreferrer"
             href="https://github.com/eliphhaz"
           >
-            Voir mon GitHub <ArrowRight size={16} />
+            {p.cta} <ArrowRight size={16} />
           </a>
         </div>
       </div>

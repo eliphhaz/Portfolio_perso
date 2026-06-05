@@ -3,9 +3,12 @@ import { useState } from "react";
 import { cn } from "../lib/utils";
 import { useToast } from "../hooks/use-toast";
 import { useReveal } from "../hooks/useReveal";
+import { useLang } from "../context/LanguageContext";
 
 export const ContactSection = () => {
   const { toast } = useToast();
+  const { t } = useLang();
+  const c = t.contact;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
@@ -23,25 +26,28 @@ export const ContactSection = () => {
     setIsSubmitting(true);
     const data = new FormData(e.target);
     data.append("access_key", "9d1ea83f-815a-4b55-ac21-a27f24c7bc36");
+    data.append("subject", `Nouveau message de ${formData.name}`);
+    data.append("from_name", "Elip_Folio");
+    data.append("replyto", formData.email);
     try {
       const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
       const result = await response.json();
       if (result.success) {
-        toast({ title: "Message envoyé !", description: "Merci, je vous répondrai bientôt." });
+        toast({ title: c.toast_success_title, description: c.toast_success_desc });
         setFormData({ name: "", email: "", message: "" });
       } else {
-        toast({ title: "Erreur", description: "Le message n'a pas pu être envoyé." });
+        toast({ title: c.toast_error_title, description: c.toast_error_desc });
       }
     } catch {
-      toast({ title: "Erreur", description: "Le message n'a pas pu être envoyé." });
+      toast({ title: c.toast_error_title, description: c.toast_error_desc });
     }
     setIsSubmitting(false);
   };
 
   const contacts = [
-    { icon: <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: "Email", value: "eliphaz.guetin@epitech.eu", href: "mailto:eliphaz.guetin@epitech.eu" },
-    { icon: <Phone className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: "Téléphone", value: "+225 0151322936", href: "tel:+2250151322936" },
-    { icon: <MapPin className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: "Localisation", value: "Abidjan, Côte d'Ivoire", href: null },
+    { icon: <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: c.contacts[0].label, value: "eliphaz.guetin@epitech.eu", href: "mailto:eliphaz.guetin@epitech.eu" },
+    { icon: <Phone className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: c.contacts[1].label, value: "+225 0151322936", href: "tel:+2250151322936" },
+    { icon: <MapPin className="h-6 w-6 text-blue-600 dark:text-blue-400" />, label: c.contacts[2].label, value: "Abidjan, Côte d'Ivoire", href: null },
   ];
 
   const socials = [
@@ -56,17 +62,17 @@ export const ContactSection = () => {
       <div className="container mx-auto max-w-5xl">
 
         <h2 ref={titleRef} className="reveal-up text-3xl md:text-4xl font-bold mb-4 text-center text-gray-900 dark:text-gray-100">
-          Me <span className="text-blue-600 dark:text-blue-400">Contacter</span>
+          {c.title} <span className="text-blue-600 dark:text-blue-400">{c.title_highlight}</span>
         </h2>
         <p className="reveal-fade text-center text-gray-700 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
-          Vous avez un projet en tête ou souhaitez collaborer ? N'hésitez pas à me contacter.
+          {c.subtitle}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
           {/* Info */}
           <div ref={infoRef} className="reveal-left space-y-8">
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Information de contact</h3>
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">{c.info_title}</h3>
             <div className="space-y-6">
               {contacts.map((c, i) => (
                 <div key={i} className="flex items-start space-x-4 group">
@@ -88,7 +94,7 @@ export const ContactSection = () => {
             </div>
 
             <div className="pt-4">
-              <h4 className="font-medium mb-4 text-gray-900 dark:text-gray-100">Réseaux sociaux</h4>
+              <h4 className="font-medium mb-4 text-gray-900 dark:text-gray-100">{c.social_title}</h4>
               <div className="flex space-x-3">
                 {socials.map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
@@ -102,11 +108,11 @@ export const ContactSection = () => {
 
           {/* Formulaire */}
           <div ref={formRef} className="reveal-right bg-white dark:bg-gray-800 p-8 rounded-xl shadow-md">
-            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Envoyez un message</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">{c.form_title}</h3>
             <form className="space-y-5" onSubmit={handleSubmit}>
               {[
-                { type: "text",  name: "name",    placeholder: "Votre nom" },
-                { type: "email", name: "email",   placeholder: "Votre email" },
+                { type: "text",  name: "name",  placeholder: c.name_placeholder },
+                { type: "email", name: "email", placeholder: c.email_placeholder },
               ].map((field) => (
                 <input
                   key={field.name}
@@ -124,7 +130,7 @@ export const ContactSection = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                placeholder="Votre message"
+                placeholder={c.message_placeholder}
                 rows="5"
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none transition-shadow duration-200 focus:shadow-md"
               />
@@ -136,7 +142,7 @@ export const ContactSection = () => {
                   isSubmitting && "opacity-50 cursor-not-allowed"
                 )}
               >
-                {isSubmitting ? "Envoi..." : "Envoyer"} <Send size={16} className={isSubmitting ? "" : "group-hover:translate-x-1 transition-transform"} />
+                {isSubmitting ? c.sending : c.send} <Send size={16} />
               </button>
             </form>
           </div>

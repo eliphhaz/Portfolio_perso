@@ -1,42 +1,57 @@
 import { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
+import { useLang } from "../context/LanguageContext";
 
-const skills = [
-  { name: "HTML/CSS",     level: 90, category: "frontend", icon: "fa-brands fa-html5",       iconColor: "text-orange-500" },
-  { name: "JavaScript",  level: 90, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-yellow-400" },
-  { name: "React",       level: 90, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-400" },
-  { name: "React Native",level: 92, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-500" },
-  { name: "TypeScript",  level: 85, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-blue-500" },
-  { name: "Tailwind CSS",level: 80, category: "frontend", icon: "fa-brands fa-css3-alt",     iconColor: "text-teal-400" },
-  { name: "Next.js",     level: 90, category: "frontend", icon: "fa-brands fa-node-js",      iconColor: "text-gray-800 dark:text-gray-100" },
-  { name: "Python",      level: 80, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-blue-400" },
-  { name: "Django",      level: 85, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-green-700" },
-  { name: "Flask",       level: 90, category: "backend",  icon: "fa-solid fa-flask",         iconColor: "text-gray-600" },
-  { name: "FastAPI",     level: 87, category: "backend",  icon: "fa-solid fa-bolt",          iconColor: "text-green-500" },
-  { name: "Nest.js",     level: 80, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-red-500" },
-  { name: "Node.js",     level: 90, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-green-600" },
-  { name: "Express",     level: 85, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-gray-500" },
-  { name: "Laravel",     level: 85, category: "backend",  icon: "fa-brands fa-laravel",      iconColor: "text-red-500" },
-  { name: "MongoDB",     level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-green-500" },
-  { name: "PostgreSQL",  level: 75, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-blue-600" },
-  { name: "MySQL",       level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-orange-400" },
-  { name: "Prisma",      level: 90, category: "backend",  icon: "fa-solid fa-layer-group",   iconColor: "text-indigo-500" },
-  { name: "GraphQL",     level: 80, category: "backend",  icon: "fa-solid fa-circle-nodes",  iconColor: "text-pink-500" },
-  { name: "Git/GitHub",  level: 90, category: "Outils",   icon: "fa-brands fa-github",       iconColor: "text-gray-800 dark:text-gray-100" },
-  { name: "Docker",      level: 70, category: "Outils",   icon: "fa-brands fa-docker",       iconColor: "text-blue-500" },
-  { name: "Figma",       level: 85, category: "Outils",   icon: "fa-brands fa-figma",        iconColor: "text-pink-400" },
-  { name: "VS Code",     level: 95, category: "Outils",   icon: "fa-solid fa-code",          iconColor: "text-blue-500" },
+const allSkills = [
+  { name: "HTML/CSS",     level: 90, category: "frontend", icon: "fa-brands fa-html5",       iconColor: "text-orange-500",  glow: "rgba(249,115,22,0.35)" },
+  { name: "JavaScript",  level: 90, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-yellow-400",  glow: "rgba(250,204,21,0.35)" },
+  { name: "React",       level: 90, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-400",    glow: "rgba(34,211,238,0.35)" },
+  { name: "React Native",level: 92, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-500",    glow: "rgba(6,182,212,0.35)"  },
+  { name: "TypeScript",  level: 85, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-blue-500",    glow: "rgba(59,130,246,0.35)" },
+  { name: "Tailwind CSS",level: 80, category: "frontend", icon: "fa-brands fa-css3-alt",     iconColor: "text-teal-400",    glow: "rgba(45,212,191,0.35)" },
+  { name: "Next.js",     level: 90, category: "frontend", icon: "fa-brands fa-node-js",      iconColor: "text-gray-700",    glow: "rgba(107,114,128,0.3)" },
+  { name: "Python",      level: 80, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-blue-400",    glow: "rgba(96,165,250,0.35)" },
+  { name: "Django",      level: 85, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-green-700",   glow: "rgba(21,128,61,0.35)"  },
+  { name: "Flask",       level: 90, category: "backend",  icon: "fa-solid fa-flask",         iconColor: "text-gray-600",    glow: "rgba(75,85,99,0.3)"    },
+  { name: "FastAPI",     level: 87, category: "backend",  icon: "fa-solid fa-bolt",          iconColor: "text-green-500",   glow: "rgba(34,197,94,0.35)"  },
+  { name: "Nest.js",     level: 80, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-red-500",     glow: "rgba(239,68,68,0.35)"  },
+  { name: "Node.js",     level: 90, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-green-600",   glow: "rgba(22,163,74,0.35)"  },
+  { name: "Express",     level: 85, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-gray-500",    glow: "rgba(107,114,128,0.3)" },
+  { name: "Laravel",     level: 85, category: "backend",  icon: "fa-brands fa-laravel",      iconColor: "text-red-500",     glow: "rgba(239,68,68,0.35)"  },
+  { name: "MongoDB",     level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-green-500",   glow: "rgba(34,197,94,0.35)"  },
+  { name: "PostgreSQL",  level: 75, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-blue-600",    glow: "rgba(37,99,235,0.35)"  },
+  { name: "MySQL",       level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-orange-400",  glow: "rgba(251,146,60,0.35)" },
+  { name: "Prisma",      level: 90, category: "backend",  icon: "fa-solid fa-layer-group",   iconColor: "text-indigo-500",  glow: "rgba(99,102,241,0.35)" },
+  { name: "GraphQL",     level: 80, category: "backend",  icon: "fa-solid fa-circle-nodes",  iconColor: "text-pink-500",    glow: "rgba(236,72,153,0.35)" },
+  { name: "Git/GitHub",  level: 90, category: "Outils",   icon: "fa-brands fa-github",       iconColor: "text-gray-700",    glow: "rgba(107,114,128,0.3)" },
+  { name: "Docker",      level: 70, category: "Outils",   icon: "fa-brands fa-docker",       iconColor: "text-blue-500",    glow: "rgba(59,130,246,0.35)" },
+  { name: "Figma",       level: 85, category: "Outils",   icon: "fa-brands fa-figma",        iconColor: "text-pink-400",    glow: "rgba(244,114,182,0.35)"},
+  { name: "VS Code",     level: 95, category: "Outils",   icon: "fa-solid fa-code",          iconColor: "text-blue-500",    glow: "rgba(59,130,246,0.35)" },
 ];
 
-const categories = ["complètes", "frontend", "backend", "Outils"];
-
 export const SkillsSection = () => {
-  const [activeCategory, setActiveCategory] = useState("complètes");
+  const { t, lang } = useLang();
+  const s = t.skills;
+  const categories = s.categories;
+
+  const [activeCategory, setActiveCategory] = useState(categories[0]);
+
+  // Réinitialise quand la langue change
+  useEffect(() => {
+    setActiveCategory(categories[0]);
+  }, [lang]);
   const [visibleSkills, setVisibleSkills] = useState([]);
 
-  const filteredSkills = skills.filter(
-    (skill) => activeCategory === "complètes" || skill.category === activeCategory
-  );
+  // Index 0 = "tout", les autres mappent vers les catégories des skills
+  // FR: ["complètes","frontend","backend","Outils"] → skill.category: frontend/backend/Outils
+  // EN: ["all","frontend","backend","Tools"] → skill.category: frontend/backend/Outils
+  const categoryKeys = ["frontend", "backend", "Outils"];
+
+  const filteredSkills = allSkills.filter((skill) => {
+    if (activeCategory === categories[0]) return true; // "tout" / "all"
+    const idx = categories.indexOf(activeCategory);
+    return skill.category === categoryKeys[idx - 1];
+  });
 
   useEffect(() => {
     setVisibleSkills([]);
@@ -63,11 +78,11 @@ export const SkillsSection = () => {
   return (
     <section
       id="skills"
-      className="py-24 pb-12 px-4 relative bg-gray-100/30 dark:bg-gray-900/30 transition-all duration-500"
+      className="pt-12 py-24 pb-12 px-4 relative bg-gray-100/30 dark:bg-gray-900/30 transition-all duration-500"
     >
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          Mes <span className="text-blue-600">Compétences</span>
+          {s.title} <span className="text-blue-600">{s.title_highlight}</span>
         </h2>
 
         <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -95,12 +110,21 @@ export const SkillsSection = () => {
             <div
               key={key}
               className={cn(
-                "bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-transform duration-300 hover:shadow-xl hover:-translate-y-2 hover:scale-105",
+                "bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-all duration-300 hover:-translate-y-2 hover:scale-105 group",
                 visibleSkills.includes(skill.name)
                   ? "opacity-100 animate-fade-in-slide-up"
                   : "opacity-0 translate-y-8"
               )}
-              style={{ animationDelay: `${key * 100}ms` }}
+              style={{
+                animationDelay: `${key * 100}ms`,
+                "--glow": skill.glow,
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.boxShadow = `0 0 0 2px ${skill.glow}, 0 8px 30px ${skill.glow}`;
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.boxShadow = "";
+              }}
             >
               <div className="flex items-center gap-3 mb-4">
                 <i className={`${skill.icon} text-2xl ${skill.iconColor}`} />

@@ -1,8 +1,11 @@
+import { useRef } from "react";
 import { ArrowUp, Mail, Phone, MapPin, Linkedin, Facebook, Instagram, Github } from "lucide-react";
 import { useReveal } from "../hooks/useReveal";
+import { useLang } from "../context/LanguageContext";
 
 export const Footer = () => {
   const ref = useReveal();
+  const { t } = useLang();
 
   const scrollToTop = () => {
     document.querySelector("#hero")?.scrollIntoView({ behavior: "smooth" });
@@ -15,15 +18,17 @@ export const Footer = () => {
     { icon: <Github size={20} />, href: "https://github.com/eliphhaz" },
   ];
 
+  const contacts = [
+    { icon: <Mail size={18} className="text-blue-600 dark:text-blue-400" />, label: "eliphaz.guetin@epitech.eu", href: "mailto:eliphaz.guetin@epitech.eu" },
+    { icon: <Phone size={18} className="text-blue-600 dark:text-blue-400" />, label: "+225 0151322936", href: "tel:+2250151322936" },
+    { icon: <MapPin size={18} className="text-blue-600 dark:text-blue-400" />, label: "Abidjan, Côte d'Ivoire", href: null },
+  ];
+
   return (
     <footer ref={ref} className="reveal-up py-12 px-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-12 flex flex-col items-center justify-center text-center gap-6">
 
       <div className="flex flex-col sm:flex-row sm:space-x-12 gap-4 justify-center">
-        {[
-          { icon: <Mail size={18} className="text-blue-600 dark:text-blue-400" />, label: "eliphaz.guetin@epitech.eu", href: "mailto:eliphaz.guetin@epitech.eu" },
-          { icon: <Phone size={18} className="text-blue-600 dark:text-blue-400" />, label: "+225 0151322936", href: "tel:+2250151322936" },
-          { icon: <MapPin size={18} className="text-blue-600 dark:text-blue-400" />, label: "Abidjan, Côte d'Ivoire", href: null },
-        ].map((item, i) => (
+        {contacts.map((item, i) => (
           <div key={i} className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
             {item.icon}
             {item.href
@@ -44,7 +49,7 @@ export const Footer = () => {
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} ElipFolio — Tous droits réservés.
+        &copy; {new Date().getFullYear()} ElipFolio — {t.footer.copy}
       </p>
 
       <button

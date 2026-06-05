@@ -32,6 +32,13 @@ export const ThemeToggle = () => {
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
+    // Si jamais visité → forcer light (blanc)
+    if (!stored) {
+      localStorage.setItem("theme", "light");
+      applyTheme("light");
+      setThemeIndex(0);
+      return;
+    }
     const idx = themes.findIndex((t) => t.key === stored);
     const initial = idx >= 0 ? idx : 0;
     setThemeIndex(initial);
