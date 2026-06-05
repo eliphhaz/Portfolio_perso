@@ -1,6 +1,7 @@
 import { Navbar } from "../components/Navbar";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { StarBackground } from "../components/StarBackground";
+import { FloatingIcons } from "../components/FloatingIcons";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
 import { SkillsSection } from "../components/SkillsSection";
@@ -13,6 +14,9 @@ export const Home = () => {
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 overflow-x-hidden transition-colors duration-300">
       {/* Toggle Theme */}
       <ThemeToggle />
+
+      {/* Floating Icons */}
+      <FloatingIcons />
 
       {/* Background Stars */}
       <StarBackground />

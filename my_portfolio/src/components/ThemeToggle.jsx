@@ -1,52 +1,75 @@
-import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
-import { cn } from "../lib/utils";
+
+const themes = [
+  {
+    key: "light",
+    label: "Clair",
+    icon: "fa-sun",
+    bg: "bg-white",
+    iconColor: "text-yellow-500",
+    ring: "ring-yellow-300",
+  },
+  {
+    key: "green",
+    label: "Vert",
+    icon: "fa-leaf",
+    bg: "bg-[#B2D69C]",
+    iconColor: "text-green-800",
+    ring: "ring-green-400",
+  },
+  {
+    key: "dark",
+    label: "Sombre",
+    icon: "fa-moon",
+    bg: "bg-gray-900",
+    iconColor: "text-blue-300",
+    ring: "ring-blue-500",
+  },
+];
 
 export const ThemeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [themeIndex, setThemeIndex] = useState(0);
 
-  // Initialisation du thème au chargement
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else if (storedTheme === "light") {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDarkMode(prefersDark);
-      document.documentElement.classList.toggle("dark", prefersDark);
-      localStorage.setItem("theme", prefersDark ? "dark" : "light");
-    }
+    const stored = localStorage.getItem("theme");
+    const idx = themes.findIndex((t) => t.key === stored);
+    const initial = idx >= 0 ? idx : 0;
+    setThemeIndex(initial);
+    applyTheme(themes[initial].key);
   }, []);
 
-  const toggleTheme = () => {
-    setIsDarkMode(prev => {
-      const nextMode = !prev;
-      document.documentElement.classList.toggle("dark", nextMode);
-      localStorage.setItem("theme", nextMode ? "dark" : "light");
-      return nextMode;
+  const applyTheme = (key) => {
+    const root = document.documentElement;
+    root.classList.remove("dark", "theme-green");
+    if (key === "dark") root.classList.add("dark");
+    if (key === "green") root.classList.add("theme-green");
+    localStorage.setItem("theme", key);
+  };
+
+  const cycle = () => {
+    setThemeIndex((prev) => {
+      const next = (prev + 1) % themes.length;
+      applyTheme(themes[next].key);
+      return next;
     });
   };
 
+  const current = themes[themeIndex];
+
   return (
     <button
-      onClick={toggleTheme}
-      className={cn(
-        "fixed bottom-5 right-5 z-50 p-3 rounded-full shadow-md transition-colors duration-300",
-        "bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700",
-        "flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500",
-        "max-sm:hidden"
-      )}
+      onClick={cycle}
+      title={`Thème : ${current.label}`}
+      className={`
+        fixed bottom-5 right-5 z-50 w-12 h-12 rounded-full shadow-lg
+        flex items-center justify-center
+        transition-all duration-300
+        ring-2 ${current.ring} ${current.bg}
+        hover:scale-110 focus:outline-none
+        max-sm:hidden
+      `}
     >
-      {isDarkMode ? (
-        <Sun className="h-6 w-6 text-yellow-400 transition-colors duration-300" />
-      ) : (
-        <Moon className="h-6 w-6 text-gray-800 dark:text-gray-200 transition-colors duration-300" />
-      )}
+      <i className={`fa-solid ${current.icon} text-lg ${current.iconColor}`} />
     </button>
   );
 };

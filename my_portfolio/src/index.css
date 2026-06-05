@@ -1,3 +1,282 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   KEYFRAMES
+============================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); }
+  50%       { box-shadow: 0 0 20px 8px rgba(37,99,235,0.15); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.05); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   CLASSES D'ANIMATION
+============================================ */
+
+.reveal-up, .reveal-left, .reveal-right, .reveal-zoom, .reveal-fade {
+  opacity: 0;
+  transition: none;
+}
+.reveal-up.revealed    { animation: fadeUp    0.7s cubic-bezier(.22,.68,0,1.2) forwards; }
+.reveal-left.revealed  { animation: fadeLeft  0.7s cubic-bezier(.22,.68,0,1.2) forwards; }
+.reveal-right.revealed { animation: fadeRight 0.7s cubic-bezier(.22,.68,0,1.2) forwards; }
+.reveal-zoom.revealed  { animation: zoomIn    0.6s cubic-bezier(.22,.68,0,1.2) forwards; }
+.reveal-fade.revealed  { animation: fadeIn    0.8s ease forwards; }
+
+.delay-100 { animation-delay: 100ms !important; }
+.delay-200 { animation-delay: 200ms !important; }
+.delay-300 { animation-delay: 300ms !important; }
+.delay-400 { animation-delay: 400ms !important; }
+.delay-500 { animation-delay: 500ms !important; }
+.delay-600 { animation-delay: 600ms !important; }
+
+.animate-float       { animation: floatY 3.5s ease-in-out infinite; }
+.animate-pulse-glow  { animation: pulseGlow 2.5s ease-in-out infinite; }
+.animate-bounce-in   { animation: bounceIn 0.8s cubic-bezier(.22,.68,0,1.2) forwards; }
+.animate-slide-down  { animation: slideDown 0.6s ease forwards; }
+
+.animate-fade-in-slide-up         { animation: fadeUp  0.7s ease forwards; }
+.animate-fade-in-slide-up-delay-1 { animation: fadeUp  0.7s 0.15s ease forwards; opacity:0; }
+.animate-fade-in-slide-up-delay-2 { animation: fadeUp  0.7s 0.3s  ease forwards; opacity:0; }
+.animate-fade-in                  { animation: fadeIn  0.8s ease forwards; }
+.animate-fade-in-delay-1          { animation: fadeIn  0.8s 0.2s ease forwards; opacity:0; }
+.animate-fade-in-delay-3          { animation: fadeIn  0.8s 0.4s ease forwards; opacity:0; }
+.animate-fade-in-delay-4          { animation: fadeIn  0.8s 0.6s ease forwards; opacity:0; }
+
+/* ============================================
+   HOVER INTERACTIFS
+============================================ */
+
+.card-hover {
+  transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+.btn-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-hover:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+}
+.icon-hover {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.icon-hover:hover {
+  transform: scale(1.25) rotate(8deg);
+}
+
+/* ============================================
+   THEME GREEN — lisibilité totale
+============================================ */
+
+html.theme-green,
+html.theme-green body {
+  background-color: #B2D69C !important;
+}
+
+html.theme-green section,
+html.theme-green footer,
+html.theme-green nav {
+  background-color: transparent !important;
+}
+
+/* Cards et surfaces */
+html.theme-green .bg-white,
+html.theme-green .bg-gray-100,
+html.theme-green .bg-gray-50 {
+  background-color: #d6f0c2 !important;
+}
+html.theme-green .bg-gray-100\/30 {
+  background-color: rgba(184,226,156,0.3) !important;
+}
+html.theme-green .dark\:bg-gray-800 {
+  background-color: #d6f0c2 !important;
+}
+
+/* Textes principaux → très foncé pour contraste */
+html.theme-green .text-gray-900,
+html.theme-green .text-gray-800,
+html.theme-green .dark\:text-gray-100,
+html.theme-green .dark\:text-gray-200 {
+  color: #0f2a09 !important;
+}
+html.theme-green .text-gray-700,
+html.theme-green .dark\:text-gray-300 {
+  color: #1a3d12 !important;
+}
+html.theme-green .text-gray-600,
+html.theme-green .text-gray-500 {
+  color: #234d17 !important;
+}
+html.theme-green .text-gray-400,
+html.theme-green .text-gray-300 {
+  color: #2d6020 !important;
+}
+
+/* Textes bleus/violets → vert très foncé */
+html.theme-green [class*="text-blue-"],
+html.theme-green [class*="text-purple-"] {
+  color: #1a4d10 !important;
+}
+
+/* Backgrounds bleus → vert foncé, texte blanc */
+html.theme-green [class*="bg-blue-"]:not(img) {
+  background-color: #2d6a1f !important;
+  color: #ffffff !important;
+}
+
+/* Conteneurs d'images des projets — fond neutre */
+html.theme-green .h-48.overflow-hidden {
+  background-color: #e8f5d8 !important;
+}
+
+/* Backgrounds bleus clairs (icônes) → vert pâle */
+html.theme-green .bg-blue-100,
+html.theme-green .bg-blue-50 {
+  background-color: #b8dfa0 !important;
+  color: #0f2a09 !important;
+}
+
+/* Stats cards hero */
+html.theme-green .bg-blue-50 .text-blue-600,
+html.theme-green [class*="bg-blue-50"] [class*="text-blue-"] {
+  color: #0f2a09 !important;
+}
+
+/* Badge disponible */
+html.theme-green .bg-blue-100 {
+  background-color: #b8dfa0 !important;
+  color: #0f2a09 !important;
+}
+
+/* Navbar pill */
+html.theme-green .bg-gray-100\/80 {
+  background-color: rgba(178,214,156,0.9) !important;
+  border-color: #8aba72 !important;
+}
+html.theme-green .dark\:bg-gray-800\/80 {
+  background-color: rgba(178,214,156,0.9) !important;
+}
+
+/* Boutons filtre skills */
+html.theme-green .bg-gray-200,
+html.theme-green .dark\:bg-gray-700 {
+  background-color: #b8dfa0 !important;
+  color: #0f2a09 !important;
+}
+
+/* Tags projets/skills */
+html.theme-green .bg-gray-100.dark\:bg-gray-700 {
+  background-color: #b8dfa0 !important;
+  color: #0f2a09 !important;
+}
+
+/* Borders */
+html.theme-green [class*="border-blue-"] {
+  border-color: #2d6a1f !important;
+}
+html.theme-green .border-gray-200,
+html.theme-green .border-gray-300 {
+  border-color: #8aba72 !important;
+}
+html.theme-green .dark\:border-gray-700,
+html.theme-green .dark\:border-gray-600 {
+  border-color: #8aba72 !important;
+}
+
+/* Inputs */
+html.theme-green input,
+html.theme-green textarea {
+  background-color: #e4f5d4 !important;
+  color: #0f2a09 !important;
+  border-color: #8aba72 !important;
+}
+html.theme-green input::placeholder,
+html.theme-green textarea::placeholder {
+  color: #3a6028 !important;
+}
+
+/* Gradient hero */
+html.theme-green #hero {
+  background: linear-gradient(to bottom, #d6f0c2, #B2D69C, #d6f0c2) !important;
+}
+html.theme-green [class*="from-blue-"],
+html.theme-green [class*="via-blue-"],
+html.theme-green [class*="to-blue-"] {
+  --tw-gradient-from: #d6f0c2 !important;
+  --tw-gradient-via: #d6f0c2 !important;
+  --tw-gradient-to: #B2D69C !important;
+}
+
+/* Hover */
+html.theme-green [class*="hover:text-blue-"]:hover {
+  color: #0f2a09 !important;
+}
+html.theme-green [class*="hover:bg-blue-"]:hover {
+  background-color: #1e4d15 !important;
+  color: #ffffff !important;
+}
+
+/* Focus */
+html.theme-green [class*="focus:ring-blue-"]:focus {
+  --tw-ring-color: #2d6a1f !important;
+}
+
+/* Shadow */
+html.theme-green [class*="shadow-blue-"] {
+  --tw-shadow-color: rgba(29,77,21,0.3) !important;
+}
+
+/* Glow photo */
+html.theme-green .animate-pulse-glow {
+  animation: none !important;
+  box-shadow: 0 0 20px 4px rgba(58,140,40,0.3) !important;
+}
+
+/* btn-hover shadow vert */
+html.theme-green .btn-hover:hover {
+  box-shadow: 0 8px 20px rgba(29,77,21,0.35) !important;
+}

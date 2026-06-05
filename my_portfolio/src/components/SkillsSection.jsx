@@ -2,30 +2,30 @@ import { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
 
 const skills = [
-  { name: "HTML/CSS", level: 90, category: "frontend" },
-  { name: "JavaScript", level: 90, category: "frontend" },
-  { name: "React", level: 90, category: "frontend" },
-  { name: "React-native", level: 92, category: "frontend" },
-  { name: "TypeScript", level: 85, category: "frontend" },
-  { name: "Python", level: 80, category: "backend" },
-  { name: "Django", level: 85, category: "backend" },
-  { name: "Flask", level: 90, category: "backend" },
-  { name: "FatsAPI", level: 87, category: "backend" },
-  { name: "Tailwind CSS", level: 80, category: "frontend" },
-  { name: "Next.js", level: 90, category: "frontend" },
-  { name: "Nest.js", level: 80, category: "backend" },
-  { name: "Node.js", level: 90, category: "backend" },
-  { name: "Express", level: 85, category: "backend" },
-  { name: "Laravel", level: 85, category: "backend" },
-  { name: "MongoDB", level: 90, category: "backend" },
-  { name: "PostgreSQL", level: 75, category: "backend" },
-  { name: "MySQL", level: 90, category: "backend" },
-  { name: "Prisma", level: 90, category: "backend" },
-  { name: "GraphQL", level: 80, category: "backend" },
-  { name: "Git/GitHub", level: 90, category: "Outils" },
-  { name: "Docker", level: 70, category: "Outils" },
-  { name: "Figma", level: 85, category: "Outils" },
-  { name: "VS Code", level: 95, category: "Outils" },
+  { name: "HTML/CSS",     level: 90, category: "frontend", icon: "fa-brands fa-html5",       iconColor: "text-orange-500" },
+  { name: "JavaScript",  level: 90, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-yellow-400" },
+  { name: "React",       level: 90, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-400" },
+  { name: "React Native",level: 92, category: "frontend", icon: "fa-brands fa-react",        iconColor: "text-cyan-500" },
+  { name: "TypeScript",  level: 85, category: "frontend", icon: "fa-brands fa-js",           iconColor: "text-blue-500" },
+  { name: "Tailwind CSS",level: 80, category: "frontend", icon: "fa-brands fa-css3-alt",     iconColor: "text-teal-400" },
+  { name: "Next.js",     level: 90, category: "frontend", icon: "fa-brands fa-node-js",      iconColor: "text-gray-800 dark:text-gray-100" },
+  { name: "Python",      level: 80, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-blue-400" },
+  { name: "Django",      level: 85, category: "backend",  icon: "fa-brands fa-python",       iconColor: "text-green-700" },
+  { name: "Flask",       level: 90, category: "backend",  icon: "fa-solid fa-flask",         iconColor: "text-gray-600" },
+  { name: "FastAPI",     level: 87, category: "backend",  icon: "fa-solid fa-bolt",          iconColor: "text-green-500" },
+  { name: "Nest.js",     level: 80, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-red-500" },
+  { name: "Node.js",     level: 90, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-green-600" },
+  { name: "Express",     level: 85, category: "backend",  icon: "fa-brands fa-node-js",      iconColor: "text-gray-500" },
+  { name: "Laravel",     level: 85, category: "backend",  icon: "fa-brands fa-laravel",      iconColor: "text-red-500" },
+  { name: "MongoDB",     level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-green-500" },
+  { name: "PostgreSQL",  level: 75, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-blue-600" },
+  { name: "MySQL",       level: 90, category: "backend",  icon: "fa-solid fa-database",      iconColor: "text-orange-400" },
+  { name: "Prisma",      level: 90, category: "backend",  icon: "fa-solid fa-layer-group",   iconColor: "text-indigo-500" },
+  { name: "GraphQL",     level: 80, category: "backend",  icon: "fa-solid fa-circle-nodes",  iconColor: "text-pink-500" },
+  { name: "Git/GitHub",  level: 90, category: "Outils",   icon: "fa-brands fa-github",       iconColor: "text-gray-800 dark:text-gray-100" },
+  { name: "Docker",      level: 70, category: "Outils",   icon: "fa-brands fa-docker",       iconColor: "text-blue-500" },
+  { name: "Figma",       level: 85, category: "Outils",   icon: "fa-brands fa-figma",        iconColor: "text-pink-400" },
+  { name: "VS Code",     level: 95, category: "Outils",   icon: "fa-solid fa-code",          iconColor: "text-blue-500" },
 ];
 
 const categories = ["complètes", "frontend", "backend", "Outils"];
@@ -38,7 +38,6 @@ export const SkillsSection = () => {
     (skill) => activeCategory === "complètes" || skill.category === activeCategory
   );
 
-  // Animation d'apparition progressive
   useEffect(() => {
     setVisibleSkills([]);
     const timeout = setTimeout(() => {
@@ -47,7 +46,6 @@ export const SkillsSection = () => {
     return () => clearTimeout(timeout);
   }, [activeCategory]);
 
-  // Animation au scroll vers la section
   useEffect(() => {
     const handleScroll = () => {
       const section = document.querySelector("#skills");
@@ -58,14 +56,14 @@ export const SkillsSection = () => {
       }
     };
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // au chargement
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <section
       id="skills"
-      className="py-24 px-4 relative bg-gray-100/30 dark:bg-gray-900/30 transition-all duration-500"
+      className="py-24 pb-12 px-4 relative bg-gray-100/30 dark:bg-gray-900/30 transition-all duration-500"
     >
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
@@ -78,9 +76,7 @@ export const SkillsSection = () => {
               key={key}
               onClick={() => {
                 setActiveCategory(category);
-                // Scroll fluide vers la section
-                const section = document.querySelector("#skills");
-                section?.scrollIntoView({ behavior: "smooth", block: "start" });
+                document.querySelector("#skills")?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className={cn(
                 "px-5 py-2 rounded-full transition-all duration-300 capitalize hover:scale-105",
@@ -106,7 +102,8 @@ export const SkillsSection = () => {
               )}
               style={{ animationDelay: `${key * 100}ms` }}
             >
-              <div className="text-left mb-4">
+              <div className="flex items-center gap-3 mb-4">
+                <i className={`${skill.icon} text-2xl ${skill.iconColor}`} />
                 <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
                   {skill.name}
                 </h3>

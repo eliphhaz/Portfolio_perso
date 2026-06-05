@@ -1,67 +1,60 @@
 import { ArrowUp, Mail, Phone, MapPin, Linkedin, Facebook, Instagram, Github } from "lucide-react";
+import { useReveal } from "../hooks/useReveal";
 
 export const Footer = () => {
+  const ref = useReveal();
+
   const scrollToTop = () => {
-    const heroSection = document.querySelector("#hero");
-    if (heroSection) {
-      heroSection.scrollIntoView({ behavior: "smooth" });
-    }
+    document.querySelector("#hero")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const socials = [
+    { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/in/n-doa-eliphaz-guetin-b0291835b/" },
+    { icon: <Facebook size={20} />, href: "https://www.facebook.com/eliphaz.guetin.7/" },
+    { icon: <Instagram size={20} />, href: "https://www.instagram.com/elip_haz/" },
+    { icon: <Github size={20} />, href: "https://github.com/eliphhaz" },
+  ];
+
   return (
-    <footer className="py-12 px-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-12 flex flex-col items-center justify-center text-center gap-6">
-      
-      {/* Info Contact */}
+    <footer ref={ref} className="reveal-up py-12 px-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-12 flex flex-col items-center justify-center text-center gap-6">
+
       <div className="flex flex-col sm:flex-row sm:space-x-12 gap-4 justify-center">
-        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-          <Mail size={20} className="text-blue-600 dark:text-blue-400" />
-          <a href="mailto:eliphaz.guetin@epitech.eu" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            eliphaz.guetin@epitech.eu
-          </a>
-        </div>
-
-        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-          <Phone size={20} className="text-blue-600 dark:text-blue-400" />
-          <a href="tel:+2250102030405" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-            +225 0151322936
-          </a>
-        </div>
-
-        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-          <MapPin size={20} className="text-blue-600 dark:text-blue-400" />
-          <span>Abidjan, Côte d'Ivoire</span>
-        </div>
+        {[
+          { icon: <Mail size={18} className="text-blue-600 dark:text-blue-400" />, label: "eliphaz.guetin@epitech.eu", href: "mailto:eliphaz.guetin@epitech.eu" },
+          { icon: <Phone size={18} className="text-blue-600 dark:text-blue-400" />, label: "+225 0151322936", href: "tel:+2250151322936" },
+          { icon: <MapPin size={18} className="text-blue-600 dark:text-blue-400" />, label: "Abidjan, Côte d'Ivoire", href: null },
+        ].map((item, i) => (
+          <div key={i} className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+            {item.icon}
+            {item.href
+              ? <a href={item.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{item.label}</a>
+              : <span>{item.label}</span>
+            }
+          </div>
+        ))}
       </div>
 
-      {/* Réseaux sociaux */}
-      <div className="flex space-x-4 justify-center text-gray-700 dark:text-gray-300">
-        <a href="https://www.linkedin.com/in/n-doa-eliphaz-guetin-b0291835b/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          <Linkedin size={24} />
-        </a>
-        <a href="https://www.facebook.com/eliphaz.guetin.7/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          <Facebook size={24} />
-        </a>
-        <a href="https://www.instagram.com/elip_haz/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          <Instagram size={24} />
-        </a>
-        <a href="https://github.com/eliphhaz" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-          <Github size={24} />
-        </a>
+      <div className="flex space-x-3">
+        {socials.map((s, i) => (
+          <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
+            className="icon-hover w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white transition-colors duration-300">
+            {s.icon}
+          </a>
+        ))}
       </div>
 
-      {/* Copyright */}
-      <p className="text-sm text-gray-600 dark:text-gray-300">
-        &copy; {new Date().getFullYear()} ElipFolio. Tous droits réservés.
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        &copy; {new Date().getFullYear()} ElipFolio — Tous droits réservés.
       </p>
 
-      {/* Bouton Remonter */}
       <button
         onClick={scrollToTop}
-        className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors flex items-center justify-center"
+        className="btn-hover p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/30 flex items-center justify-center"
         aria-label="Remonter en haut"
       >
-        <ArrowUp size={20} />
+        <ArrowUp size={18} />
       </button>
+
     </footer>
   );
 };
