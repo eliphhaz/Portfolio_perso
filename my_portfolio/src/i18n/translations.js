@@ -13,8 +13,8 @@ export const translations = {
       greeting: "Salut, Je suis",
       subtitle: "Je crée des applications web de bout en bout avec des technologies modernes.",
       stats: [
-        { value: "5+", label: "Projets" },
-        { value: "2+", label: "Ans d'exp." },
+        { value: "10+", label: "Projets" },
+        { value: "1+", label: "Ans d'exp." },
         { value: "10+", label: "Technos" },
       ],
       cta_projects: "Voir mes projets",
@@ -87,8 +87,8 @@ export const translations = {
       greeting: "Hi, I'm",
       subtitle: "I build full-stack web applications using modern technologies.",
       stats: [
-        { value: "5+", label: "Projects" },
-        { value: "2+", label: "Yrs exp." },
+        { value: "10+", label: "Projects" },
+        { value: "1+", label: "Yrs exp." },
         { value: "10+", label: "Techs" },
       ],
       cta_projects: "View my projects",
