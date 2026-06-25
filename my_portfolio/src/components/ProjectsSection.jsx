@@ -3,14 +3,16 @@ import { useReveal } from "../hooks/useReveal";
 import { useRef, useEffect } from "react";
 import { useLang } from "../context/LanguageContext";
 import portfolioImage from "../assets/portfolio.png";
+import Portfolio2Image from "../assets/portfolio2.png";
 import YobaloImage    from "../assets/Yobalo.png";
 import SerenaImage    from "../assets/serena.png";
 import GarageImage    from "../assets/garage.png";
 import CoumbassaImage from "../assets/coumbassa.png";
 
 const projects = [
-  { id: 1, title: "Portfolio",             description: "Portfolio personnel moderne et réactif.",                                                                                                                            image: portfolioImage, tags: ["React", "TailwindCSS"],    demoUrl: "https://porfolioperso.vercel.app/",   githubUrl: "https://github.com/eliphhaz/Portfolio_perso" },
-  { id: 2, title: "Site Yobalo",           description: "Yobalo est né d'une idée simple : la livraison de proximité doit être un service de confiance, chaleureux et solidaire.",                                           image: YobaloImage,    tags: ["WordPress"],              demoUrl: "https://yobalo.com/",                 githubUrl: "#" },
+  { id: 1, title: "Portfolio",             description: "Portfolio personnel moderne et réactif.",                                                                                                                            image: portfolioImage,  tags: ["React", "TailwindCSS"],    demoUrl: "https://porfolioperso.vercel.app/",   githubUrl: "https://github.com/eliphhaz/Portfolio_perso" },
+  { id: 2, title: "Portfolio JFAE",        description: "Portfolio personnel moderne et réactif.",                                                                                                                            image: Portfolio2Image, tags: ["React", "TailwindCSS"],    demoUrl: "https://jfaeportfolio.vercel.app/",   githubUrl: "#" },
+  { id: 3, title: "Site Yobalo",           description: "Yobalo est né d'une idée simple : la livraison de proximité doit être un service de confiance, chaleureux et solidaire.",                                           image: YobaloImage,     tags: ["WordPress"],              demoUrl: "https://yobalo.com/",                 githubUrl: "#" },
   { id: 3, title: "SERENA+",               description: "Site vitrine haut de gamme pour SERENA+, service d'accompagnement à domicile des personnes dépendantes à Abidjan.",                                                 image: SerenaImage,    tags: ["Nuxt 3", "Vue 3", "CSS"], demoUrl: "https://serena.cigal.africa",          githubUrl: "#" },
   { id: 4, title: "Garage Auto Leader CI", description: "Site vitrine pour un centre d'expertise multimarque basé en Côte d'Ivoire, avec gestion de devis et solutions pro.",                                                image: GarageImage,    tags: ["HTML", "CSS"],            demoUrl: "https://gal.africa",                  githubUrl: "#" },
   { id: 5, title: "Coumbassa & Sanden",    description: "Site corporate pour Coumbassa & Sanden Group, partenaire de confiance pour le conseil, la finance et la technologie.",                                              image: CoumbassaImage, tags: ["Nuxt.js"],                demoUrl: "https://coumbassa-sanden.com",         githubUrl: "#" },
