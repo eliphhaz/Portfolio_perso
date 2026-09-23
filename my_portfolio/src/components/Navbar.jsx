@@ -9,12 +9,13 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useState("#hero");
   const { t, lang, toggleLang } = useLang();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const navItems = [
-    { name: t.nav.home,     href: "#hero" },
-    { name: t.nav.about,    href: "#about" },
-    { name: t.nav.skills,   href: "#skills" },
+    { name: t.nav.home, href: "#hero" },
+    { name: t.nav.about, href: "#about" },
+    { name: t.nav.skills, href: "#skills" },
     { name: t.nav.projects, href: "#projects" },
-    { name: t.nav.contact,  href: "#contact" },
+    { name: t.nav.contact, href: "#contact" },
   ];
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [t]);
+  }, [navItems, t]);
 
   useEffect(() => {
     if (!isMenuOpen) return;

@@ -31,6 +31,7 @@ export const StarBackground = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     generateStars();
     generateMeteors();
     const handleResize = () => generateStars();

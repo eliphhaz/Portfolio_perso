@@ -35,6 +35,7 @@ export const ThemeToggle = () => {
     // Si jamais visité → forcer light (blanc)
     if (!stored) {
       localStorage.setItem("theme", "light");
+      // eslint-disable-next-line react-hooks/immutability
       applyTheme("light");
       setThemeIndex(0);
       return;

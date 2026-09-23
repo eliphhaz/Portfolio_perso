@@ -1,4 +1,4 @@
-import { useRef } from "react";
+
 import { ArrowUp, Mail, Phone, MapPin, Linkedin, Facebook, Instagram, Github } from "lucide-react";
 import { useReveal } from "../hooks/useReveal";
 import { useLang } from "../context/LanguageContext";
